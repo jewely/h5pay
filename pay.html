@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>订单支付</title>
+    <link rel="stylesheet" href="pay.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <div>
+            <img class="header-avatar">
+        </div>
+        <ul >
+            <li>
+                米米酱
+            </li>
+            <li>
+                40.00元/半小时 × 2
+                <span>80</span>
+            </li>
+        </ul>
+    </div>
+    <div class="main">
+
+        <h1 class="main-title">
+            支付方式
+        </h1>
+        <ul class="pay">
+            <li class="pay-item">微信</li>
+            <li class="pay-item">支付宝</li>
+            <li class="pay-item">余额
+                <span class="pay-overage">(0.00元)</span>
+            </li>
+        </ul>
+    </div>
+    <div class="footer">
+        <button id="btn-pay" class="btn-pay">支付80.00元</button>
+    </div>
+
+    <!-- <script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.1/alipayjsapi.inc.min.js"></script> -->
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <script>
+
+        var btn = document.querySelector('#btn-pay');
+        btn.addEventListener('click', function () {
+
+            var data = {
+                timestamp: '2018-08-03 08:08:08',
+                method: 'alipay.trade.wap.pay',
+                app_id: '2014072300007148',
+                sign_type: 'RSA2',
+                sign: 'ERITJKEIJKJHKKKKKKKHJEREEEEEEEEEEE',
+                version: '1.0',
+                charset: 'utf-8',
+                biz_content: JSON.stringify(
+
+                    { "body": "对一笔交易的具体描述信息。如果是多种商品，请将商品描述字符串累加传给body。", "subject": "大乐透", "out_trade_no": "70501111111S001111119", "timeout_express": "90m", "time_expire": "2016-12-31 10:05", "total_amount": 9, "seller_id": "2088102147948060", "auth_token": "appopenBb64d181d0146481ab6a762c00714cC27", "goods_type": "0", "passback_params": "merchantBizType%3d3C%26merchantBizNo%3d2016010101111", "quit_url": "http://www.taobao.com/product/113714.html", "product_code": "QUICK_WAP_WAY", "promo_params": { "storeIdType": "1" }, "royalty_info": { "royalty_type": "ROYALTY", "royalty_detail_infos": [{ "serial_no": 1, "trans_in_type": "userId", "batch_no": "123", "out_relation_id": "20131124001", "trans_out_type": "userId", "trans_out": "2088101126765726", "trans_in": "2088101126708402", "amount": 0.1, "desc": "分账测试1", "amount_percentage": "100" }] }, "extend_params": { "sys_service_provider_id": "2088511833207846", "hb_fq_num": "3", "hb_fq_seller_percent": "100", "industry_reflux_info": { "scene_code": "metro_tradeorder", "channel": "xxxx", "scene_data": { "asset_name": "ALIPAY" } }, "card_type": "S0JP0000" }, "sub_merchant": { "merchant_id": "19023454", "merchant_type": "alipay: 支付宝分配的间连商户编号, merchant: 商户端的间连商户编号" }, "enable_pay_channels": "pcredit,moneyFund,debitCardExpress", "disable_pay_channels": "pcredit,moneyFund,debitCardExpress", "store_id": "NJ_001", "settle_info": { "settle_detail_infos": [{ "trans_in_type": "cardSerialNo", "trans_in": "A0001", "summary_dimension": "A0001", "amount": 0.1 }] }, "invoice_info": { "key_info": { "is_support_invoice": true, "invoice_merchant_name": "ABC|003", "tax_num": "1464888883494" }, "details": [{ "code": "100294400", "name": "服饰", "num": "2", "sumPrice": "200.00", "taxRate": "6%" }] }, "specified_channel": "pcredit", "business_params": { "data": "123" }, "ext_user_info": { "name": "李明", "mobile": "16587658765", "cert_type": "IDENTITY_CARD", "cert_no": "362334768769238881", "min_age": "18", "fix_buyer": "F", "need_check_info": "F" } }
+
+
+                )
+            }
+
+            $.post(`https://openapi.alipay.com/gateway.do?`, data, 'json')
+                .done(function (res) { alert(res) })
+                .fail(function (res) {
+                    alert(res)
+                })
+        });
+
+
+        var rnd = (+Date()).toString(16)
+        var stringA = `appid=wx2421b1c4370ec43b&body=H5支付测试&mch_id=10000100&nonce_str=${rnd}`;
+
+
+        var stringSignTemp = stringA + "&key=192006250b4c09247ec02edce69f6a2d" //注：key为商户平台设置的密钥key
+        var sign = md5(stringSignTemp).toUpperCase() //注：MD5签名方式
+
+
+        var postData = `
+            <xml>
+                <appid>wx2421b1c4370ec43b</appid>
+                <attach>支付测试</attach>
+                <body>H5支付测试</body>
+                <mch_id>10000100</mch_id>
+                <nonce_str>${rnd}</nonce_str>
+                <notify_url>https://oa.idreamsky.com/</notify_url>
+                <openid>oUpF8uMuAJO_M2pxb1Q9zNjWeS6o</openid>
+                <out_trade_no>1415659990</out_trade_no>
+                <spbill_create_ip>${returnCitySN["cip"]}</spbill_create_ip>
+                <total_fee>1</total_fee>
+                <trade_type>MWEB</trade_type>
+                <scene_info>{"h5_info": {"type":"IOS","app_name": "王者荣耀","package_name": "com.tencent.tmgp.sgame"}}</scene_info>
+                <sign>${sign}</sign>
+            </xml>`
+
+
+        // $.ajax({
+        //     url: 'https://api.mch.weixin.qq.com/pay/unifiedorder',
+        //     type: "POST", data: postData,
+        //     // contentType: "text/xml",
+        //     // dataType: "text",
+        //     dataType: "xml",
+        //     contentType: "application/xml",
+        // })
+        //     .done(function (res) { alert(res) })
+        //     .fail(function (res) {
+        //         alert(res)
+        //     })
+    </script>
+</body>
+
+</html>

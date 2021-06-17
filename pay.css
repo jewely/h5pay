@@ -1,0 +1,89 @@
+html,
+body,
+ul,
+h1 {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 12px;
+}
+
+body {
+  background-color: rgba(242, 242, 242, 1);
+}
+
+ul {
+  list-style: none;
+}
+.header {
+  display: flex;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  align-items: center;
+  background-color: #fff;
+}
+
+.header-avatar {
+  width: 9rem;
+  height: 9rem;
+  border-radius: 4.58rem;
+}
+
+.main {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  background-color: #fff;
+}
+.main-title {
+  width: 9.33rem;
+  height: 3.33rem;
+  font-size: 2.33rem;
+  font-family: SFUIText-Regular;
+  color: rgba(153, 153, 153, 1);
+}
+
+.pay {
+  line-height: 5rem;
+  font-size: 2.67rem;
+  font-family: PingFangSC-Regular;
+  color: rgba(51, 51, 51, 1);
+}
+
+.pay-item {
+  padding-left: 2rem;
+}
+.pay-item:not(:first-child) {
+  border-top: 0.08rem solid rgba(234, 234, 234, 1);
+}
+
+.pay-item--active {
+}
+
+.pay-overage {
+  margin-left: 1rem;
+}
+
+.footer {
+  height: 10.08rem;
+  line-height: 10.08rem;
+  background-color: rgba(255, 255, 255, 1);
+  text-align: center;
+}
+
+.btn-pay {
+  width: 30rem;
+  height: 6.67rem;
+  background: linear-gradient(
+    -90deg,
+    rgba(158, 35, 77, 1),
+    rgba(81, 33, 73, 1)
+  );
+  border-radius: 1.33rem;
+  font-size: 3rem;
+  font-family: PingFangSC-Medium;
+  color: rgba(255, 255, 255, 1);
+  vertical-align: middle;
+  outline: none;
+  border: none;
+}
